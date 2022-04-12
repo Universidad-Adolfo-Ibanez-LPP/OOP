@@ -1,5 +1,8 @@
 package com.uai.workshop;
 
+import com.uai.workshop.ejerciciopuerto.Puerto;
+import com.uai.workshop.ejerciciopuerto.exceptions.SameDayRentException;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,19 +12,15 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        scanner = new Scanner(System.in);
+        Puerto puerto = new Puerto();
 
-        int x1, x2;
-        double rta;
+        String fechaOrigen = "12 04 2022";
+        String fechaDest = "12 04 2022";
 
         try {
-            System.out.println("Ingrese dos numeros");
-            x1 = scanner.nextInt();
-            x2 = scanner.nextInt();
-            rta = x1/x2;
-            System.out.println("Resultado: "+rta);
-        } catch (Exception e) {
-            System.err.println("Se produjo un error");
+            puerto.generarAlquiler(fechaOrigen, fechaDest);
+        } catch (SameDayRentException e) {
+            e.printStackTrace();
         }
 
     }

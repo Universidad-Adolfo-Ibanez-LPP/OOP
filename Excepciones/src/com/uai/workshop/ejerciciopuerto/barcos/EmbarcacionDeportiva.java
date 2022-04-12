@@ -6,6 +6,6 @@ public class EmbarcacionDeportiva extends Barco{
 
     @Override
     public double modulo() {
-        return 0;
+        return moduloBase()+potenciaCV;
     }
 }

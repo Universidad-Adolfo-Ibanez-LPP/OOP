@@ -15,7 +15,7 @@ public class Main {
         Puerto puerto = new Puerto();
 
         String fechaOrigen = "12 04 2022";
-        String fechaDest = "12 04 2022";
+        String fechaDest = "13 04 2022";
 
         try {
             puerto.generarAlquiler(fechaOrigen, fechaDest);

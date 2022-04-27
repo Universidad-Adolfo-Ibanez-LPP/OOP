@@ -4,6 +4,7 @@ import com.uai.app2.libros.Libro;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,9 +19,10 @@ public class Archivo {
         internalFile = new File(nombre);
     }
 
-    public List<Libro> leerDatos(){
+    public List<Libro> leerDatos() throws IOException {
         List<Libro> libros = new ArrayList<Libro>();
-
+        File r = new File("./Ejemplo.txt");
+        r.createNewFile();
         Scanner obj = null;
         try {
             obj = new Scanner(internalFile);

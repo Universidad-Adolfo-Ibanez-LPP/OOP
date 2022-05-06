@@ -1,4 +1,4 @@
-package com.uai.app;
+package com.uai.app.dominio;
 
 import com.opencsv.bean.CsvBindByName;
 

@@ -2,6 +2,7 @@ package com.uai.app;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.uai.app.dominio.Persona;
 
 import java.io.*;
 import java.nio.charset.Charset;

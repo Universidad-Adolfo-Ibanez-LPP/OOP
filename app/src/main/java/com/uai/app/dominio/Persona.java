@@ -1,8 +1,12 @@
 package com.uai.app.dominio;
 
 import com.opencsv.bean.CsvBindByName;
+import com.uai.app.dominio.enums.Status;
 
 public class Persona implements Comparable<Persona>{
+
+    public Persona() {
+    }
 
     @CsvBindByName(column = "name")
     private String name;
@@ -32,6 +36,32 @@ public class Persona implements Comparable<Persona>{
         return cost;
     }
 
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -40,6 +70,10 @@ public class Persona implements Comparable<Persona>{
                 '}';
     }
 
+    public String[] getDataToCsv(){
+        // el string.valueOf me convierte el int a string
+        return new String[]{ getName().trim(), getAddress().trim(), getCountry().trim(), String.valueOf(getCost()).trim()};
+    }
     @Override
     public int compareTo(Persona o) {
         return this.name.compareTo(o.getName())*-1;

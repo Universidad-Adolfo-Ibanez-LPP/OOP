@@ -3,17 +3,12 @@ package com.uai.app.files;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.uai.app.dominio.Persona;
-import com.uai.app.dominio.enums.Status;
-import com.uai.app.dominio.enums.Tittles;
 import com.uai.app.logic.DataManager;
 
 import com.uai.app.exceptions.CSVNotFoundException;
 
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 

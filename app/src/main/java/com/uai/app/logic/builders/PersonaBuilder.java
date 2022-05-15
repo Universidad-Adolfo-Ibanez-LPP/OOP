@@ -1,7 +1,6 @@
 package com.uai.app.logic.builders;
 
 import com.uai.app.dominio.Persona;
-import com.uai.app.dominio.enums.Status;
 
 public class PersonaBuilder {
 

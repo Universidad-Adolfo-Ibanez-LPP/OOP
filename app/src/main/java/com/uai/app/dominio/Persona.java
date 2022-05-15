@@ -1,7 +1,6 @@
 package com.uai.app.dominio;
 
 import com.opencsv.bean.CsvBindByName;
-import com.uai.app.dominio.enums.Status;
 
 public class Persona implements Comparable<Persona>{
 
@@ -35,16 +34,7 @@ public class Persona implements Comparable<Persona>{
     public int getCost() {
         return cost;
     }
-
-    private Status status;
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    
 
     public void setName(String name) {
         this.name = name;

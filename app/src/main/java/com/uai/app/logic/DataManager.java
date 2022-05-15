@@ -1,7 +1,6 @@
 package com.uai.app.logic;
 
 import com.uai.app.dominio.Persona;
-import com.uai.app.dominio.enums.Status;
 import com.uai.app.dominio.enums.Tittles;
 import com.uai.app.exceptions.DataNotLoadedException;
 import com.uai.app.ui.utils.*;

@@ -34,7 +34,6 @@ public class Persona implements Comparable<Persona>{
     public int getCost() {
         return cost;
     }
-    
 
     public void setName(String name) {
         this.name = name;

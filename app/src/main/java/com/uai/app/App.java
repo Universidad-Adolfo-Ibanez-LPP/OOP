@@ -1,15 +1,15 @@
 package com.uai.app;
 
-import com.uai.app.dominio.Persona;
 import com.uai.app.dominio.enums.Tittles;
 import com.uai.app.exceptions.CSVNotFoundException;
 import com.uai.app.files.FileManager;
 import com.uai.app.logic.DataManager;
 import com.uai.app.logic.SearchManager;
 import com.uai.app.ui.utils.UIBuilder;
+import com.uai.app.ui.MainMenuUI;
 
 import java.io.*;
-import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Hello world!
@@ -27,10 +27,12 @@ public class App {
             //instancio y seteo la data
             DataManager.getInstance().setData(f.getData());
 
-            HashSet<Persona> resultados = SearchManager.getInstance().findPersonByAttribute(Tittles.NAME, "Mary");
+            //aca ya puedo llamar al menu
+            UIBuilder.buildMainUI(MainMenuUI.class);
 
-            DataManager.getInstance().removerPersonas(resultados);
+            Map a = DataManager.getInstance().getPeopleByColum(Tittles.COUNTRY);
 
+            //finalizo guardando la data
             f.saveData();
         } catch (CSVNotFoundException e) {
             System.out.println(e.getMessage());

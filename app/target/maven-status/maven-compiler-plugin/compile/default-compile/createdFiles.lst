@@ -1,5 +1,6 @@
-com/uai/app/dominio/enums/Status.class
 com/uai/app/logic/builders/PersonaBuilder.class
+com/uai/app/ui/MostrarDatosUI.class
+com/uai/app/ui/MainMenuUI$1.class
 com/uai/app/ui/utils/AppUtils.class
 com/uai/app/dominio/enums/Tittles.class
 com/uai/app/exceptions/NotMainPanelLoadedException.class
@@ -7,6 +8,7 @@ com/uai/app/ui/utils/UIBuilder$2.class
 com/uai/app/logic/SearchManager.class
 com/uai/app/files/FileManager.class
 com/uai/app/ui/utils/UIBuilder$1.class
+com/uai/app/ui/MainMenuUI.class
 com/uai/app/exceptions/DataNotLoadedException.class
 com/uai/app/dominio/Persona.class
 com/uai/app/ui/utils/UAIJFrame.class

@@ -11,15 +11,13 @@ public class UIBuilder {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UAIJFrame ui = (UAIJFrame) jFrame.getDeclaredConstructor().newInstance();
+                    UAIJFrame ui = (UAIJFrame) jFrame.getDeclaredConstructors()[0].newInstance(jFrame.getCanonicalName());
                     ui.showUI();
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 } catch (NotMainPanelLoadedException e) {
                     e.printStackTrace();
@@ -34,7 +32,7 @@ public class UIBuilder {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UAIJFrame ui = (UAIJFrame) jFrame.getDeclaredConstructor().newInstance();
+                    UAIJFrame ui = (UAIJFrame) jFrame.getDeclaredConstructors()[0].newInstance(jFrame.getCanonicalName());
                     ui.showUI();
                     ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 } catch (InstantiationException e) {
@@ -42,8 +40,6 @@ public class UIBuilder {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 } catch (NotMainPanelLoadedException e) {
                     e.printStackTrace();

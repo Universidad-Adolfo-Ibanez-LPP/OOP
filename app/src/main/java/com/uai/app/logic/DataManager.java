@@ -15,7 +15,7 @@ import java.util.*;
 *
 * Dado que solo necesitare una instancia de esta clase
 * la convierto en SIngleton https://refactoring.guru/design-patterns/singleton
-*
+* Esta clase es la que me va a manejar todo el tiempo mi data en memoria
  */
 public class DataManager {
 
@@ -38,41 +38,6 @@ public class DataManager {
 
     public HashSet<Persona> getData() {
         return data;
-    }
-
-    public Map<String, Set<Persona>> getPeopleByColum(Tittles columName){
-        //ahora instancio un mapa con esas claves
-        Map<String, Set<Persona>> resultados = new HashMap<>();
-        for (Persona p : this.data){
-            //primero debo saber que atributo
-            // es para saber a que get llamare
-            // esto se denomina llamar
-            // a metodos por reflexion
-            Class<?> classObj = p.getClass();
-            Method printMessage = null;
-            try {
-                String camelCase = CaseUtils.toCamelCase(columName.getVal(), true);
-                printMessage = classObj.getDeclaredMethod("get"+camelCase);
-                String filterName = String.valueOf(printMessage.invoke(p));
-                Set<Persona> ciudadanos = resultados.get(filterName);
-                //Significa que debo crear si es true
-                if (AppUtils.isNull(ciudadanos)){
-                    //uso un set para evitar repetidos
-                    ciudadanos = new HashSet<Persona>();
-                }
-                ciudadanos.add(p);
-                resultados.put(filterName, ciudadanos);
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return resultados;
     }
 
     public void setData(HashSet<Persona> data) {

@@ -30,8 +30,6 @@ public class App {
             //aca ya puedo llamar al menu
             UIBuilder.buildMainUI(MainMenuUI.class);
 
-            Map a = DataManager.getInstance().getPeopleByColum(Tittles.COUNTRY);
-
             //finalizo guardando la data
             f.saveData();
         } catch (CSVNotFoundException e) {

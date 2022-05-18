@@ -7,6 +7,10 @@ import java.lang.reflect.InvocationTargetException;
 
 public class UIBuilder {
 
+    /*
+    * Este metodo construye la UI utilizando solo el nombre de la clase
+    * De esa forma es mas simple levantar ventanas
+     */
     public static void buildUI(Class jFrame){
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {

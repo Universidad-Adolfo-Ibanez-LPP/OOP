@@ -1,6 +1,6 @@
 package com.uai.app.ui;
 
-import com.uai.app.dominio.Persona;
+import com.uai.app.dominio.Noticia;
 import com.uai.app.exceptions.DataNotLoadedException;
 import com.uai.app.logic.DataManager;
 import com.uai.app.ui.utils.UAIJFrame;
@@ -23,10 +23,10 @@ public class MostrarDatosUI extends UAIJFrame  {
 
         String[] titles = {"name","address","country","cost"};
         //obtengo las personas en una matriz
-        HashSet<Persona> data = DataManager.getInstance().getData();
+        HashSet<Noticia> data = DataManager.getInstance().getData();
         String[][] dataTabla = new String[data.size()][4];
         int cont = 0;
-        for(Persona p : data) {
+        for(Noticia p : data) {
             dataTabla[cont] = p.getDataToCsv();
             cont++;
         }

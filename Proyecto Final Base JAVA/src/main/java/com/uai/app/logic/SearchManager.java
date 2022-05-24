@@ -1,6 +1,6 @@
 package com.uai.app.logic;
 
-import com.uai.app.dominio.Persona;
+import com.uai.app.dominio.Noticia;
 import com.uai.app.dominio.enums.Tittles;
 import com.uai.app.ui.utils.AppUtils;
 import org.apache.commons.text.CaseUtils;
@@ -10,7 +10,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+/*
+ * Esta clase me sirve para filtrar la data que tenemos en DataManager
+ * Acorde a ciertos criterios o formas de busqueda
+ * Para valores que no sean numericos utiliza distancia de Levenshtein
+ */
 public class SearchManager {
+
+    //nos dice la precision en la busqueda el numero
+    // cuanto mas cercano a 0 es mas exacta la busqueda
+    // cuanto mas lejano menos exacta
+    // Chila difiere en 1 de Chile por ejemplo
+    public static final int FILTER_MAX_DISTANCE = 4;
 
     //lo que me servira para medir las distancias entre dos strings
     private static LevenshteinDistance lv = new LevenshteinDistance();
@@ -23,6 +34,8 @@ public class SearchManager {
 
     }
 
+    // como todo singleton este metodo
+    //  para acceder la unica instancia
     public static SearchManager getInstance(){
         if (instance == null){
             instance = new SearchManager();
@@ -31,13 +44,49 @@ public class SearchManager {
     }
 
     /*
-    * Esto usa la distancia de leven*
+     * Esto usa la distancia de Levenshtein
+     * para buscar, para llamarlo tenemos que
+     * pasarle un valor de una enumeracion que se corresponde
+     * al campo donde vamos a buscar, supongamos country,
+     * queremos que nos devuelvan todas las personas
+     * que viven en Chile, por lo que lo llamamos
+     *
+     * findPersonByAttribute(Tittles.COUNTRY, "Chile")
+     *
+     * si quisieramos todas las personas de nombre David
+     * Entonces deberiamos llamarlo de la siguiente forma
+     *
+     * findPersonByAttribute(Tittles.NAME, "David")
      */
-    public HashSet<Persona> findPersonByAttribute(Tittles title, String theSearch){
+
+    /*
+     * Esto usa la distancia de Levenshtein
+     * para buscar, para llamarlo tenemos que
+     * pasarle un valor de una enumeracion que se corresponde
+     * al campo donde vamos a buscar, supongamos country,
+     * queremos que nos devuelvan todas las personas
+     * que viven en Chile, por lo que lo llamamos
+     *
+     * findPersonByAttribute(Tittles.COUNTRY, "Chile")
+     *
+     * si quisieramos todas las personas de nombre David
+     * Entonces deberiamos llamarlo de la siguiente forma
+     *
+     * findPersonByAttribute(Tittles.NAME, "David")
+     *
+     * SI queremos especificar nosotros la precision
+     *  y que no sea siempre 4 llamamos al metodo de abajo
+     */
+    public HashSet<Noticia> findPersonByAttribute(Tittles title, String theSearch){
+        return findPersonByAttribute(title, theSearch, FILTER_MAX_DISTANCE);
+    }
+
+    //mismo metodo que el de arriba solo que pedimos la precision
+    public HashSet<Noticia> findPersonByAttribute(Tittles title, String theSearch, int precision){
         //ahora instancio un mapa con esas claves
-        HashSet<Persona> data = DataManager.getInstance().getData();;
-        HashSet<Persona> ciudadanos = new HashSet<Persona>();
-        for (Persona p : data){
+        HashSet<Noticia> data = DataManager.getInstance().getData();;
+        HashSet<Noticia> ciudadanos = new HashSet<Noticia>();
+        for (Noticia p : data){
             //Uso lo mismo que en el data manager
             Class<?> classObj = p.getClass();
             Method printMessage = null;
@@ -54,7 +103,7 @@ public class SearchManager {
                     }
                 } else {
                     //Con una distancia de 3 estamos bien cubiertos
-                    if (lv.apply(theSearch, filterName) < 4){
+                    if (lv.apply(theSearch, filterName) < precision){
                         ciudadanos.add(p);
                     }
                 }
@@ -70,5 +119,54 @@ public class SearchManager {
 
         }
         return ciudadanos;
+    }
+
+
+
+    /*
+     * Este metodo devuelve conjuntos de personas
+     *  agrupados por grupos acorde a una columna//atributo
+     * de la persona. Si lo llamamos asi
+     *
+     * getPeopleByColum(Tittles.COUNTRY)
+     *
+     * va a devolver un mapa donde cada clave es el pais y asociado
+     * como valor tendran las personas que viven en ese pais
+     * esto es util cuando me piden por ejemplo todos los libros de una seccion etc
+     */
+    public Map<String, Set<Noticia>> getPeopleByColum(Tittles columName){
+        //ahora instancio un mapa con esas claves
+        Map<String, Set<Noticia>> resultados = new HashMap<>();
+        HashSet<Noticia> data = DataManager.getInstance().getData();;
+        for (Noticia p : data){
+            //primero debo saber que atributo
+            // es para saber a que get llamare
+            // esto se denomina llamar
+            // a metodos por reflexion
+            Class<?> classObj = p.getClass();
+            Method printMessage = null;
+            try {
+                String camelCase = CaseUtils.toCamelCase(columName.getVal(), true);
+                printMessage = classObj.getDeclaredMethod("get"+camelCase);
+                String filterName = String.valueOf(printMessage.invoke(p));
+                Set<Noticia> ciudadanos = resultados.get(filterName);
+                //Significa que debo crear si es true
+                if (AppUtils.isNull(ciudadanos)){
+                    //uso un set para evitar repetidos
+                    ciudadanos = new HashSet<Noticia>();
+                }
+                ciudadanos.add(p);
+                resultados.put(filterName, ciudadanos);
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return resultados;
     }
 }

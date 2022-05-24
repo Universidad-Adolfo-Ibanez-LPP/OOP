@@ -1,4 +1,3 @@
-com/uai/app/logic/builders/PersonaBuilder.class
 com/uai/app/ui/MostrarDatosUI.class
 com/uai/app/ui/MainMenuUI$1.class
 com/uai/app/ui/utils/AppUtils.class
@@ -10,10 +9,14 @@ com/uai/app/files/FileManager.class
 com/uai/app/ui/utils/UIBuilder$1.class
 com/uai/app/ui/MainMenuUI.class
 com/uai/app/exceptions/DataNotLoadedException.class
-com/uai/app/dominio/Persona.class
 com/uai/app/ui/utils/UAIJFrame.class
 com/uai/app/App.class
+com/uai/app/logic/parsers/LaTerceraParser.class
+com/uai/app/logic/parsers/TeleTreceParser.class
+com/uai/app/logic/ParserManager.class
 com/uai/app/ui/utils/UIBuilder.class
 com/uai/app/exceptions/PersonWithoutAdressException.class
+com/uai/app/logic/parsers/UAIAbstractParser.class
+com/uai/app/dominio/Noticia.class
 com/uai/app/exceptions/CSVNotFoundException.class
 com/uai/app/logic/DataManager.class

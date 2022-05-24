@@ -1,6 +1,6 @@
 package com.uai.app.logic;
 
-import com.uai.app.dominio.Persona;
+import com.uai.app.dominio.Noticia;
 import com.uai.app.dominio.enums.Tittles;
 import com.uai.app.exceptions.DataNotLoadedException;
 import com.uai.app.ui.utils.*;
@@ -19,7 +19,7 @@ import java.util.*;
  */
 public class DataManager {
 
-    private HashSet<Persona> data;
+    private HashSet<Noticia> data;
 
     private static DataManager instance;
 
@@ -36,46 +36,11 @@ public class DataManager {
         return instance;
     }
 
-    public HashSet<Persona> getData() {
+    public HashSet<Noticia> getData() {
         return data;
     }
 
-    public Map<String, Set<Persona>> getPeopleByColum(Tittles columName){
-        //ahora instancio un mapa con esas claves
-        Map<String, Set<Persona>> resultados = new HashMap<>();
-        for (Persona p : this.data){
-            //primero debo saber que atributo
-            // es para saber a que get llamare
-            // esto se denomina llamar
-            // a metodos por reflexion
-            Class<?> classObj = p.getClass();
-            Method printMessage = null;
-            try {
-                String camelCase = CaseUtils.toCamelCase(columName.getVal(), true);
-                printMessage = classObj.getDeclaredMethod("get"+camelCase);
-                String filterName = String.valueOf(printMessage.invoke(p));
-                Set<Persona> ciudadanos = resultados.get(filterName);
-                //Significa que debo crear si es true
-                if (AppUtils.isNull(ciudadanos)){
-                    //uso un set para evitar repetidos
-                    ciudadanos = new HashSet<Persona>();
-                }
-                ciudadanos.add(p);
-                resultados.put(filterName, ciudadanos);
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return resultados;
-    }
-
-    public void setData(HashSet<Persona> data) {
+    public void setData(HashSet<Noticia> data) {
         this.data = data;
     }
 
@@ -86,22 +51,22 @@ public class DataManager {
         }
         //Creo un string para ir sumando ahi la data
         StringBuilder sb = new StringBuilder(data.size()*50);
-        for (Persona p : data){
+        for (Noticia p : data){
                sb.append(p);
                sb.append("\n");
         }
         return sb.toString();
     }
 
-    public void agregarPersona(Persona p){
+    public void agregarNoticia(Noticia p){
         this.data.add(p);
     }
 
-    public void removerPersona(Persona p){
+    public void removerNoticia(Noticia p){
         this.data.remove(p);
     }
 
-    public void removerPersonas(Collection<Persona> personas){
+    public void removerNoticias(Collection<Noticia> personas){
         this.data.removeAll(personas);
     }
 }

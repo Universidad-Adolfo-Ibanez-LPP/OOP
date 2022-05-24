@@ -2,7 +2,7 @@ package com.uai.app.files;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.uai.app.dominio.Persona;
+import com.uai.app.dominio.Noticia;
 import com.uai.app.logic.DataManager;
 
 import com.uai.app.exceptions.CSVNotFoundException;
@@ -12,11 +12,13 @@ import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.opencsv.ICSVWriter.*;
+
 public class FileManager {
 
     private File theFile;
 
-    private String[] titles = {"name","address","country","cost"};
+    private String[] titles = {"texto","link","icono","fecha", "fuente"};
     /*
     Reviso si existe el archivo que me van a hacer ocupar
     y sino tiro una excepcion para arriba
@@ -28,12 +30,13 @@ public class FileManager {
         }
     }
 
-    public HashSet<Persona> getData() {
-        List<Persona> beans = null;
+    public HashSet<Noticia> getData() {
+        List<Noticia> beans = null;
         try {
             FileReader ff = new FileReader(theFile, Charset.forName("UTF-8"));
             beans = new CsvToBeanBuilder(ff)
-                    .withType(Persona.class)
+                    .withType(Noticia.class)
+                    .withSeparator('|')
                     .build()
                     .parse();
         } catch (FileNotFoundException e) {
@@ -42,20 +45,20 @@ public class FileManager {
             System.err.println("No se puede leer el archivo");
         }
       //  Collections.sort(beans);
-        HashSet<Persona> personasFinales = new HashSet();
-        personasFinales.addAll(beans);
-        return personasFinales;
+        HashSet<Noticia> noticiasFinales = new HashSet();
+        noticiasFinales.addAll(beans);
+        return noticiasFinales;
     }
 
     public void saveData(){
         try {
             FileWriter t = new FileWriter(theFile.getName());
-            CSVWriter writer = new CSVWriter(t);
+            CSVWriter writer = new CSVWriter(t, '|', DEFAULT_QUOTE_CHARACTER, DEFAULT_ESCAPE_CHARACTER, DEFAULT_LINE_END);
             // Aca convierto al csv que necesito
             writer.writeNext(titles, false);
-            HashSet<Persona> data = DataManager.getInstance().getData();
+            HashSet<Noticia> data = DataManager.getInstance().getData();
 
-            for(Persona p : data){
+            for(Noticia p : data){
                 //significa que lo quiero mantener
                 writer.writeNext(p.getDataToCsv(),false);
             }
